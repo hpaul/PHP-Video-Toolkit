@@ -31,7 +31,7 @@
  * @package    php-reader
  * @copyright  Copyright (c) 2008 The PHP Reader Project Workgroup
  * @license    http://code.google.com/p/php-reader/wiki/License New BSD License
- * @version    $Id$
+ * @version    $Id: Twiddling.php 110 2008-09-05 17:10:51Z svollbehr $
  */
 
 /**
@@ -41,7 +41,7 @@
  * @author     Ryan Butterfield <buttza@gmail.com>
  * @copyright  Copyright (c) 2008 The PHP Reader Project Workgroup
  * @license    http://code.google.com/p/php-reader/wiki/License New BSD License
- * @version    $Rev$
+ * @version    $Rev: 110 $
  * @static
  */
 final class Twiddling

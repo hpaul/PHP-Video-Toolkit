@@ -32,7 +32,7 @@
  * @subpackage Tests
  * @copyright  Copyright (c) 2008 The PHP Reader Project Workgroup
  * @license    http://code.google.com/p/php-reader/wiki/License New BSD License
- * @version    $Id$
+ * @version    $Id: TestTransform.php 107 2008-08-03 19:09:16Z svollbehr $
  */
 
 /**#@+ @ignore */
@@ -49,7 +49,7 @@ require_once("Transform.php");
  * @author     Ryan Butterfield <buttza@gmail.com>
  * @copyright  Copyright (c) 2008 The PHP Reader Project Workgroup
  * @license    http://code.google.com/p/php-reader/wiki/License New BSD License
- * @version    $Rev$
+ * @version    $Rev: 107 $
  */
 final class TestTransform extends PHPUnit_Framework_TestCase
 {

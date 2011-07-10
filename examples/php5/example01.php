@@ -85,7 +85,15 @@
 		$toolkit->setVideoOutputDimensions(320, 240);
 		
 // 		set the video to be converted to flv
-		$toolkit->setFormatToFLV($samprate, $bitrate);
+		$ok = $toolkit->setFormatToFLV($samprate, $bitrate, true);
+// 		check the return value in-case of error as we are validating the codecs
+		if(!$ok)
+		{
+// 			if there was an error then get it 
+			echo $toolkit->getLastError()."<br /><br />\r\n";
+			$toolkit->reset();
+			continue;
+		}
 		
 // 		set the output details and overwrite if nessecary
 		$ok = $toolkit->setOutput($video_output_dir, $filename_minus_ext.'.flv', PHPVideoToolkit::OVERWRITE_EXISTING);

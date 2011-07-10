@@ -33,7 +33,7 @@
  * @subpackage ASF
  * @copyright  Copyright (c) 2006-2008 The PHP Reader Project Workgroup
  * @license    http://code.google.com/p/php-reader/wiki/License New BSD License
- * @version    $Id$
+ * @version    $Id: FileProperties.php 102 2008-06-23 20:41:20Z svollbehr $
  */
 
 /**#@+ @ignore */
@@ -49,7 +49,7 @@ require_once("ASF/Object.php");
  * @author     Sven Vollbehr <svollbehr@gmail.com>
  * @copyright  Copyright (c) 2006-2008 The PHP Reader Project Workgroup
  * @license    http://code.google.com/p/php-reader/wiki/License New BSD License
- * @version    $Rev$
+ * @version    $Rev: 102 $
  */
 final class ASF_Object_FileProperties extends ASF_Object
 {

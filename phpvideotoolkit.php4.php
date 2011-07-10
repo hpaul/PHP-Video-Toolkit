@@ -208,6 +208,13 @@
 	define('PHPVIDEOTOOLKIT_RATIO_STANDARD', '4:3');
 	define('PHPVIDEOTOOLKIT_RATIO_WIDE', '16:9');
 	define('PHPVIDEOTOOLKIT_RATIO_CINEMATIC', '1.85');
+	
+		
+	/**
+	 * Audio Channel Presets
+	 */
+	define('PHPVIDEOTOOLKIT_AUDIO_STEREO', 2);
+	define('PHPVIDEOTOOLKIT_AUDIO_MONO', 1);
 
 	/**
 	 * @author Oliver Lillie (aka buggedcom) <publicmail@buggedcom.co.uk>
@@ -228,6 +235,8 @@
 			'generic_temp_writable' 						=> 'The temporary directory is not write-able by the web server.',
 			
 			'getFileInfo_no_input' 							=> 'Input file does not exist so no information can be retrieved.',
+			'inputFileHasVideo_no_input' 					=> 'Input file does not exist so no information can be retrieved.',
+			'inputFileHasAudio_no_input' 					=> 'Input file does not exist so no information can be retrieved.',
 			'setInputFile_file_existence' 					=> 'Input file "#file" does not exist',
 			'extractAudio_valid_format' 					=> 'Value "#format" set from $toolkit->extractAudio, is not a valid audio format. Valid values ffmpeg PHPVIDEOTOOLKIT_FORMAT_AAC, PHPVIDEOTOOLKIT_FORMAT_AIFF, PHPVIDEOTOOLKIT_FORMAT_MP2, PHPVIDEOTOOLKIT_FORMAT_MP3, PHPVIDEOTOOLKIT_FORMAT_MP4, PHPVIDEOTOOLKIT_FORMAT_MPEG4, PHPVIDEOTOOLKIT_FORMAT_M4A or PHPVIDEOTOOLKIT_FORMAT_WAV. If you wish to specifically try to set another format you should use the advanced function $toolkit->addCommand. Set $command to "-f" and $argument to your required value.',
 			'extractFrame_video_frame_rate_404' 			=> 'You have attempted to extract a thumbnail from a video while automagically guessing the framerate of the video, but the framerate could not be accessed. You can remove this error by manually setting the frame rate of the video.',
@@ -236,6 +245,7 @@
 			'extractFrames_video_begin_frame_count' 		=> 'You have attempted to extract thumbnails from a video but the thumbnail you are trying to start the extraction from does not exist in the video.',
 			'extractFrames_video_end_frame_count' 			=> 'You have attempted to extract thumbnails from a video but the thumbnail you are trying to end the extraction at does not exist in the video.',
 			'setFormat_valid_format' 						=> 'Value "#format" set from $toolkit->setFormat, is not a valid format. Valid values are PHPVIDEOTOOLKIT_FORMAT_3GP2, PHPVIDEOTOOLKIT_FORMAT_3GP, PHPVIDEOTOOLKIT_FORMAT_AAC, PHPVIDEOTOOLKIT_FORMAT_AIFF, PHPVIDEOTOOLKIT_FORMAT_AMR, PHPVIDEOTOOLKIT_FORMAT_ASF, PHPVIDEOTOOLKIT_FORMAT_AVI, PHPVIDEOTOOLKIT_FORMAT_FLV, PHPVIDEOTOOLKIT_FORMAT_GIF, PHPVIDEOTOOLKIT_FORMAT_MJ2, PHPVIDEOTOOLKIT_FORMAT_MP2, PHPVIDEOTOOLKIT_FORMAT_MP3, PHPVIDEOTOOLKIT_FORMAT_MP4, PHPVIDEOTOOLKIT_FORMAT_MPEG4, PHPVIDEOTOOLKIT_FORMAT_M4A, PHPVIDEOTOOLKIT_FORMAT_MPEG, PHPVIDEOTOOLKIT_FORMAT_MPEG1, PHPVIDEOTOOLKIT_FORMAT_MPEG2, PHPVIDEOTOOLKIT_FORMAT_MPEGVIDEO, PHPVIDEOTOOLKIT_FORMAT_PSP, PHPVIDEOTOOLKIT_FORMAT_RM, PHPVIDEOTOOLKIT_FORMAT_SWF, PHPVIDEOTOOLKIT_FORMAT_VOB, PHPVIDEOTOOLKIT_FORMAT_WAV, PHPVIDEOTOOLKIT_FORMAT_JPG. If you wish to specifically try to set another format you should use the advanced function $toolkit->addCommand. Set $command to "-f" and $argument to your required value.',
+			'setAudioChannels_valid_channels' 				=> 'Value "#channels" set from $toolkit->setAudioChannels, is not a valid integer. Valid values are 1, or 2. If you wish to specifically try to set another channels value you should use the advanced function $toolkit->addCommand. Set $command to "-ac" and $argument to your required value.',
 			'setAudioSampleFrequency_valid_frequency' 		=> 'Value "#frequency" set from $toolkit->setAudioSampleFrequency, is not a valid integer. Valid values are 11025, 22050, 44100. If you wish to specifically try to set another frequency you should use the advanced function $toolkit->addCommand. Set $command to "-ar" and $argument to your required value.',
 			'setAudioFormat_valid_format' 					=> 'Value "#format" set from $toolkit->setAudioFormat, is not a valid format. Valid values are PHPVIDEOTOOLKIT_FORMAT_AAC, PHPVIDEOTOOLKIT_FORMAT_AIFF, PHPVIDEOTOOLKIT_FORMAT_AMR, PHPVIDEOTOOLKIT_FORMAT_ASF, PHPVIDEOTOOLKIT_FORMAT_MP2, PHPVIDEOTOOLKIT_FORMAT_MP3, PHPVIDEOTOOLKIT_FORMAT_MP4, PHPVIDEOTOOLKIT_FORMAT_MPEG2, PHPVIDEOTOOLKIT_FORMAT_RM, PHPVIDEOTOOLKIT_FORMAT_WAV. If you wish to specifically try to set another format you should use the advanced function $toolkit->addCommand. Set $command to "-acodec" and $argument to your required value.',
 			'setVideoFormat_valid_format' 					=> 'Value "#format" set from $toolkit->setAudioFormat, is not a valid format. Valid values are PHPVIDEOTOOLKIT_FORMAT_3GP2, PHPVIDEOTOOLKIT_FORMAT_3GP, PHPVIDEOTOOLKIT_FORMAT_AVI, PHPVIDEOTOOLKIT_FORMAT_FLV, PHPVIDEOTOOLKIT_FORMAT_GIF, PHPVIDEOTOOLKIT_FORMAT_MJ2, PHPVIDEOTOOLKIT_FORMAT_MP4, PHPVIDEOTOOLKIT_FORMAT_MPEG4, PHPVIDEOTOOLKIT_FORMAT_M4A, PHPVIDEOTOOLKIT_FORMAT_MPEG, PHPVIDEOTOOLKIT_FORMAT_MPEG1, PHPVIDEOTOOLKIT_FORMAT_MPEG2, PHPVIDEOTOOLKIT_FORMAT_MPEGVIDEO. If you wish to specifically try to set another format you should use the advanced function $toolkit->addCommand. Set $command to "-vcodec" and $argument to your required value.',
@@ -284,6 +294,15 @@
 		 * @access public
 		 */
 		var $ffmpeg_info		= false;
+
+		/**
+		 * A public var that determines if the ffmpeg binary has been found. The default value
+		 * is null unless getFFmpegInfo is called whereby depending on the results it is set to
+		 * true or false
+		 * @var mixed
+		 * @access public
+		 */
+		var $ffmpeg_found		= null;
 
 		/**
 		 * A private var that contains the info of any file that is accessed by PHPVideoToolkit::getFileInfo();
@@ -568,11 +587,25 @@
 			}
 // 			check to see if this is a static call
 			$format = '';
+			$data = array();
 // 			execute the ffmpeg lookup
 			exec(PHPVIDEOTOOLKIT_FFMPEG_BINARY.' -formats 2>&1', $buffer);
-			$buffer = implode("\r\n", $buffer);
+			
+			$this->ffmpeg_found = $data['ffmpeg-found']  = !(strpos($buffer[0], 'command not found') !== false || strpos($buffer[0], 'No such file or directory') !== false);
 			$data['binary'] 	= array();
 			$data['compiler'] 	= array();
+			$data['ffmpeg-php-support'] = $this->hasFFmpegPHPSupport();
+			$data['raw'] 		= implode("\r\n", $buffer);
+			
+			if(!$this->ffmpeg_found)
+			{
+				$this->ffmpeg_info = $data;
+				return $data;
+			} 
+			
+			$buffer = $data['raw'];
+			
+// 			start building the info array
 			$look_ups = array('configuration'=>'configuration: ', 'formats'=>'File formats:', 'codecs'=>'Codecs:', 'filters'=>'Bitstream filters:', 'protocols'=>'Supported file protocols:', 'abbreviations'=>'Frame size, frame rate abbreviations:', 'Note:');
 			$total_lookups = count($look_ups);
 			$pregs = array();
@@ -585,7 +618,7 @@
 					$indexs[$key] = $index;
 				}
 			}
-			preg_match('/'.implode('(.*)', $pregs).'/s', $buffer, $matches);
+			preg_match('/'.implode('(.*)', $pregs).'(.*)/s', $buffer, $matches);
 			$configuration = trim($matches[$indexs['configuration']]);
 // 			grab the ffmpeg configuration flags
 			preg_match_all('/--[a-zA-Z0-9\-]+/', $configuration, $config_flags);
@@ -623,7 +656,7 @@
 			if(isset($indexs['filters']) && isset($matches[$indexs['filters']]))
 			{
 				$filters = trim($matches[$indexs['filters']]);
-				if(empty($filters))
+				if(empty($filters) === false)
 				{
 					$data['filters'] = explode(' ', $filters);
 				}
@@ -633,7 +666,7 @@
 			if(isset($indexs['protocols']) && isset($matches[$indexs['protocols']]))
 			{
 				$protocols = trim($matches[$indexs['protocols']]);
-				if(empty($protocols))
+				if(empty($protocols) === false)
 				{
 					$data['protocols'] = explode(' ', str_replace(':', '', $protocols));
 				}
@@ -643,13 +676,11 @@
 			if(isset($indexs['abbreviations']) && isset($matches[$indexs['abbreviations']]))
 			{
 				$abbreviations = trim($matches[$indexs['abbreviations']]);
-				if(empty($abbreviations))
+				if(empty($abbreviations) === false)
 				{
 					$data['abbreviations'] = explode(' ', $abbreviations);
 				}
 			}
-			$data['ffmpeg-php-support'] = $this->hasFFmpegPHPSupport();
-			$data['raw'] 		= $buffer;
 			$this->ffmpeg_info = $data;
 			return $data;
 			
@@ -665,7 +696,7 @@
 		 */
 		function hasFFmpegPHPSupport()
 		{
-			return extension_loaded('ffmpeg') ? 'module' : (is_file(dirname(__FILE__).DS.'adapters'.DS.'ffmpeg-php'.DS.'ffmpeg_movie.php') && is_file(dirname(__FILE__).DS.'adapters'.DS.'ffmpeg-php'.DS.'ffmpeg_frame.php') && is_file(dirname(__FILE__).DS.'adapters'.DS.'ffmpeg-php'.DS.'ffmpeg_animated_gif.php') ? 'emulated' : false);
+			return $this->ffmpeg_found === false ? false : (extension_loaded('ffmpeg') ? 'module' : (is_file(dirname(__FILE__).DS.'adapters'.DS.'ffmpeg-php'.DS.'ffmpeg_movie.php') && is_file(dirname(__FILE__).DS.'adapters'.DS.'ffmpeg-php'.DS.'ffmpeg_frame.php') && is_file(dirname(__FILE__).DS.'adapters'.DS.'ffmpeg-php'.DS.'ffmpeg_animated_gif.php') ? 'emulated' : false));
 		}
 		
 		/**
@@ -720,21 +751,45 @@
 // 			execute the ffmpeg lookup
 			exec(PHPVIDEOTOOLKIT_FFMPEG_BINARY.' -i '.$file.' 2>&1', $buffer);
 			$buffer = implode("\r\n", $buffer);
+			$data = array();
 // 			grab the duration and bitrate data
 			preg_match_all('/Duration: (.*)/', $buffer, $matches);
 			if(count($matches) > 0)
 			{
-				$parts 								= explode(', ', trim($matches[1][0]));
-				$data['duration']					= array();
-				$timecode					 		= $parts[0];
-				$data['duration']['seconds'] 		= $this->timecodeToSeconds($timecode);
-				$data['bitrate']  					= intval(ltrim($parts[2], 'bitrate: '));
-				$data['duration']['start']  		= ltrim($parts[1], 'start: ');
-				$data['duration']['timecode']		= array();
-				$data['duration']['timecode']['rounded'] = substr($timecode, 0, 8);
-				$data['duration']['timecode']['seconds'] = array();
-				$data['duration']['timecode']['seconds']['exact']   = $timecode;
-				$data['duration']['timecode']['seconds']['excess']  = intval(substr($timecode, 9));
+				$line = trim($matches[0][0]);
+// 				capture any data
+				preg_match_all('/(Duration|start|bitrate): ([^,]*)/', $line, $matches);
+// 				setup the default data
+				$data['duration'] = array(
+					'timecode' => array(
+						'seconds' => array(
+							'exact' => -1,
+							'excess' => -1
+						),
+						'rounded' => -1,
+					)
+				);
+// 				get the data
+				foreach ($matches[1] as $key => $detail)
+				{
+					$value = $matches[2][$key];
+					switch(strtolower($detail))
+					{
+						case 'duration' :
+// 						print_r($value);
+							$data['duration']['timecode']['rounded'] = substr($value, 0, 8);
+							$data['duration']['timecode']['frames'] = array();
+							$data['duration']['timecode']['frames']['exact'] = $value;
+							$data['duration']['timecode']['frames']['excess'] = intval(substr($value, 9));
+							break;
+						case 'bitrate' :
+							$data['bitrate'] = strtoupper($value) === 'N/A' ? -1 : intval($value);
+							break;
+						case 'start' :
+							$data['duration']['start'] = $value;
+							break;
+					}
+				}
 			}
 			
 // 			match the video stream info
@@ -752,7 +807,8 @@
 				);
 // 				get the framerate
 				preg_match('/([0-9\.]+) (fps|tb)\(r\)/', $matches[0], $fps_matches);
-				$data['video']['frame_rate'] 	= floatval($fps_matches[1]);
+				$data['duration']['timecode']['frames']['frame_rate'] = $data['video']['frame_rate'] 	= floatval($fps_matches[1]);
+				$data['duration']['timecode']['seconds']['total'] = $data['duration']['seconds'] = $this->formatTimecode($data['duration']['timecode']['frames']['exact'], '%hh:%mm:%ss.%fn', '%st.%ms', $data['video']['frame_rate']);
 				$fps_value = $fps_matches[0];
 // 				get the ratios
 				preg_match('/\[PAR ([0-9\:\.]+) DAR ([0-9\:\.]+)\]/', $matches[0], $ratio_matches);
@@ -767,10 +823,8 @@
 // 					set the total frame count for the video
 					$data['video']['frame_count'] 						= ceil($data['duration']['seconds'] * $data['video']['frame_rate']);
 // 					set the framecode
-					$frames												= ceil($data['video']['frame_rate']*($data['duration']['timecode']['seconds']['excess']/10));
-					$data['duration']['timecode']['frames'] 			= array();
-					$data['duration']['timecode']['frames']['exact']  	= $data['duration']['timecode']['rounded'].'.'.$frames;
-					$data['duration']['timecode']['frames']['excess'] 	= $frames;
+					$data['duration']['timecode']['seconds']['excess'] 	= floatval($data['duration']['seconds']) - floor($data['duration']['seconds']);
+					$data['duration']['timecode']['seconds']['exact'] 	= $this->formatSeconds($data['duration']['seconds'], '%hh:%mm:%ss.%ms');
 					$data['duration']['timecode']['frames']['total'] 	= $data['video']['frame_count'];
 				}
 // 				formats should be anything left over, let me know if anything else exists
@@ -804,25 +858,25 @@
 				preg_match('/(stereo|mono)/i', $matches[0], $stereo_matches);
 				if(count($stereo_matches))
 				{
-					$data['audio']['stereo'] = $stereo_matches[0];
+					$data['audio']['stereo'] 		= $stereo_matches[0];
 					array_push($other_parts, $stereo_matches[0]);
 				}
 // 				get the sample_rate
 				preg_match('/([0-9]{3,6}) Hz/', $matches[0], $sample_matches);
 				if(count($sample_matches))
 				{
-					$data['audio']['sample_rate'] = count($sample_matches) ? floatval($sample_matches[1]) : -1;
+					$data['audio']['sample_rate'] 	= count($sample_matches) ? floatval($sample_matches[1]) : -1;
 					array_push($other_parts, $sample_matches[0]);
 				}
 // 				get the bit rate
 				preg_match('/([0-9]{1,3}) kb\/s/', $matches[0], $bitrate_matches);
 				if(count($bitrate_matches))
 				{
-					$data['audio']['bitrate'] = count($bitrate_matches) ? floatval($bitrate_matches[1]) : -1;
+					$data['audio']['bitrate'] 		= count($bitrate_matches) ? floatval($bitrate_matches[1]) : -1;
 					array_push($other_parts, $bitrate_matches[0]);
 				}
 // 				formats should be anything left over, let me know if anything else exists
-				$parts = explode(',', $matches[2]);
+				$parts 							= explode(',', $matches[2]);
 				$formats = array();
 				foreach($parts as $key=>$part)
 				{
@@ -832,7 +886,20 @@
 						array_push($formats, $part);
 					}
 				}
-				$data['audio']['codec'] = $formats[0];
+				$data['audio']['codec'] 		= $formats[0];
+// 				if no video is set then no audio frame rate is set 
+				if($data['duration']['timecode']['seconds']['exact'] === -1)
+				{
+					$exact_timecode = $this->formatTimecode($data['duration']['timecode']['frames']['exact'], '%hh:%mm:%ss.%fn', '%hh:%mm:%ss.%ms', 1000);
+					$data['duration']['timecode']['seconds'] = array(
+						'exact'  => $exact_timecode,
+						'excess' => intval(substr($exact_timecode, 8)),
+						'total' => $this->formatTimecode($data['duration']['timecode']['frames']['exact'], '%hh:%mm:%ss.%fn', '%ss.%ms', 1000)
+					);
+					$data['duration']['timecode']['frames']['frame_rate'] = 1000;
+					$data['duration']['seconds'] = $data['duration']['timecode']['seconds']['total'];
+					//$this->formatTimecode($data['duration']['timecode']['frames']['exact'], '%hh:%mm:%ss.%fn', '%st.%ms', $data['video']['frame_rate']);					
+				}
 			}
 
 // 			check that some data has been obtained
@@ -845,6 +912,66 @@
 				$data['_raw_info'] = $buffer;
 			}
 			return $this->_file_info[$hash] = $data;
+		}		
+
+		/**
+		 * Determines if the input media has a video stream.
+		 * 
+		 * @access public
+		 * @param string $file The absolute path of the file that is required to be manipulated.
+		 * @return bool
+		 **/
+		function fileHasVideo($file=false)
+		{
+// 			check to see if this is a static call
+			if($file !== false && !isset($this))
+			{     
+				$toolkit = new PHPVideoToolkit();
+				$data = $toolkit->getFileInfo($file);
+			}
+// 			if the file has not been specified check to see if an input file has been specified
+			else if($file === false)
+			{
+				if(!$this->_input_file)
+				{
+//					input file not valid
+					return $this->_raiseError('inputFileHasVideo_no_input');
+//<-				exits
+				}
+				$file = $this->_input_file;
+				$data = $this->getFileInfo($file);
+			}
+			return isset($data['video']);
+		}		
+
+		/**
+		 * Determines if the input media has an audio stream.
+		 * 
+		 * @access public
+		 * @param string $file The absolute path of the file that is required to be manipulated.
+		 * @return bool
+		 **/
+		function fileHasAudio($file=false)
+		{
+// 			check to see if this is a static call
+			if($file !== false && !isset($this))
+			{     
+				$toolkit = new PHPVideoToolkit();
+				$data = $toolkit->getFileInfo($file);
+			}
+// 			if the file has not been specified check to see if an input file has been specified
+			else if($file === false)
+			{
+				if(!$this->_input_file)
+				{
+//					input file not valid
+					return $this->_raiseError('inputFileHasAudio_no_input');
+//<-				exits
+				}
+				$file = $this->_input_file;
+				$data = $this->getFileInfo($file);
+			}
+			return isset($data['audio']);
 		}		
 
 		/**
@@ -1147,6 +1274,24 @@
 		}
 
 		/**
+		 * Sets the number of audio channels
+		 *
+		 * @access public
+		 * @param integer $channel_type Valid values are PHPVIDEOTOOLKIT_AUDIO_MONO, PHPVIDEOTOOLKIT_AUDIO_STEREO
+		 * @return boolean false on error encountered, true otherwise
+		 */
+		function setAudioChannels($channel_type=PHPVIDEOTOOLKIT_AUDIO_MONO)
+		{
+//			validate input
+			if(!in_array($channel_type, array(PHPVIDEOTOOLKIT_AUDIO_MONO, PHPVIDEOTOOLKIT_AUDIO_STEREO)))
+			{
+				return $this->_raiseError('setAudioChannels_valid_channels', array('channels'=>$channel_type));
+//<-			exits
+			}
+			return $this->addCommand('-ac', $channel_type);
+		}
+
+		/**
 		 * Sets the audio format for audio outputs
 		 *
 		 * @access public
@@ -1212,6 +1357,17 @@
 		function disableAudio()
 		{
 			return $this->addCommand('-an');
+		}
+
+		/**
+		 * Disables video encoding
+		 *
+		 * @access public
+		 * @return boolean false on error encountered, true otherwise
+		 */
+		public function disableVideo()
+		{
+			return $this->addCommand('-vn');
 		}
 
 		/**
@@ -1455,6 +1611,81 @@
 		}
 		
 		/**
+		 * Extracts a segment of video and/or audio
+		 * (Note; If set to 1 and the duration set by $extract_begin_timecode and $extract_end_timecode is equal to 1 you get more than one frame.
+		 * For example if you set $extract_begin_timecode='00:00:00' and $extract_end_timecode='00:00:01' you might expect because the time span is
+		 * 1 second only to get one frame if you set $frames_per_second=1. However this is not correct. The timecode you set in $extract_begin_timecode
+		 * acts as the beginning frame. Thus in this example the first frame exported will be from the very beginning of the video, the video will
+		 * then move onto the next frame and export a frame there. Therefore if you wish to export just one frame from one position in the video,
+		 * say 1 second in you should set $extract_begin_timecode='00:00:01' and set $extract_end_timecode='00:00:01'.)
+		 *
+		 * @access public
+		 * @param string $extract_begin_timecode A timecode (hh:mm:ss.fn - you can change the timecode format by changing the $timecode_format param
+		 * 		it obeys the formatting of PHPVideoToolkit::formatTimecode(), see below for more info)
+		 * @param string|integer|boolean $extract_end_timecode A timecode (hh:mm:ss.fn - you can change the timecode format by changing the $timecode_format param
+		 * 		it obeys the formatting of PHPVideoToolkit::formatTimecode(), see below for more info)
+		 * @param integer $timecode_format The format of the $extract_begin_timecode and $extract_end_timecode timecodes are being given in.
+		 * 		default '%hh:%mm:%ss'
+		 * 			- %hh (hours) representative of hours
+		 * 			- %mm (minutes) representative of minutes
+		 * 			- %ss (seconds) representative of seconds
+		 * 			- %fn (frame number) representative of frames (of the current second, not total frames)
+		 * 			- %ms (milliseconds) representative of milliseconds (of the current second, not total milliseconds) (rounded to 3 decimal places)
+		 * 			- %ft (frames total) representative of total frames (ie frame number)
+		 * 			- %st (seconds total) representative of total seconds (rounded).
+		 * 			- %sf (seconds floored) representative of total seconds (floored).
+		 * 			- %mt (milliseconds total) representative of total milliseconds. (rounded to 3 decimal places)
+		 * 		Thus you could use an alternative, '%hh:%mm:%ss:%ms', or '%hh:%mm:%ss' dependent on your usage.
+		 * @param boolean $check_frames_exist Determines if a frame exists check should be made to ensure the timecode given by $extract_end_timecode 
+		 * 		actually exists.
+		 */
+		public function extractSegment($extract_begin_timecode, $extract_end_timecode, $timecode_format='%hh:%mm:%ss.%fn', $frames_per_second=false, $check_frames_exist=true)
+		{
+// 			check for frames per second, if it's not set auto set it.
+			if($frames_per_second === false)
+			{
+				$info = $this->getFileInfo();
+				$frames_per_second = $info['duration']['timecode']['frames']['frame_rate'];
+			}
+			
+// 			check if frame exists
+			if($check_frames_exist)
+			{
+				if($info['duration']['seconds'] < floatval($this->formatTimecode($extract_end_timecode, $timecode_format, '%ss.%ms', $frames_per_second)))
+				{
+// 					the input has not returned any video data so the frame rate can not be guessed
+					return $this->_raiseError('extractSegment_end_timecode');
+				}
+				else if($extract_end_timecode !== false && $info['duration']['seconds'] < floatval($this->formatTimecode($extract_begin_timecode, $timecode_format, '%ss.%ms', $frames_per_second)))
+				{
+// 					the input has not returned any video data so the frame rate can not be guessed
+					return $this->_raiseError('extractSegment_begin_timecode');
+				}
+			}
+			
+// 			format the begin timecode if the timecode format is not already ok.
+			$begin_position = (float) $this->formatTimecode($extract_begin_timecode, $timecode_format, '%ss.%ms', $frames_per_second);
+			if($timecode_format !== '%hh:%mm:%ss.%ms')
+			{
+				$extract_begin_timecode = $this->formatTimecode($extract_begin_timecode, $timecode_format, '%hh:%mm:%ss.%ms', $frames_per_second);
+			}
+			$this->addCommand('-ss', $extract_begin_timecode);
+			
+//			allows for exporting the entire timeline
+			if($extract_end_timecode !== false)
+			{
+				$end_position = (float) $this->formatTimecode($extract_end_timecode, $timecode_format, '%ss.%ms', $frames_per_second);
+// 				format the end timecode if the timecode format is not already ok.
+				if($timecode_format !== '%hh:%mm:%ss.%ms')
+				{
+					$extract_end_timecode = $this->formatTimecode($extract_end_timecode, $timecode_format, '%hh:%mm:%ss.%ms', $frames_per_second);
+				}
+        		$this->addCommand('-t', $end_position-$begin_position);
+			}
+			return true;
+		}
+		
+		/**
 		 * Extracts frames from a video.
 		 * (Note; If set to 1 and the duration set by $extract_begin_timecode and $extract_end_timecode is equal to 1 you get more than one frame.
 		 * For example if you set $extract_begin_timecode='00:00:00' and $extract_end_timecode='00:00:01' you might expect because the time span is
@@ -1497,7 +1728,7 @@
 			{
 // 				get the file info, will exit if no input has been set
 				$info = $this->getFileInfo();
-				if(!isset($info['video']))
+				if($info === false || !isset($info['video']))
 				{
 // 					the input has not returned any video data so the frame rate can not be guessed
 					return $this->_raiseError('extractFrame_video_frame_rate_404');
@@ -1516,7 +1747,7 @@
 // 					the input has not returned any video data so the frame rate can not be guessed
 					return $this->_raiseError('extractFrames_video_end_frame_count');
 				}
-				else if($info['video']['frame_count'] < $this->formatTimecode($extract_begin_timecode, $timecode_format, '%ft', $frames_per_second))
+				else if($extract_end_timecode !== false && $info['video']['frame_count'] < $this->formatTimecode($extract_begin_timecode, $timecode_format, '%ft', $frames_per_second))
 				{
 // 					the input has not returned any video data so the frame rate can not be guessed
 					return $this->_raiseError('extractFrames_video_begin_frame_count');

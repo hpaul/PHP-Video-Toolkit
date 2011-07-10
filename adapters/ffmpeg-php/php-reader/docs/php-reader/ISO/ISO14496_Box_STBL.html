@@ -26,7 +26,7 @@
 <p class="description"><p>If the track that contains the Sample Table Box references no data, then the  Sample Table Box does not need to contain any sub-boxes (this is not a very  useful media track).</p><p>If the track that the Sample Table Box is contained in does reference data,  then the following sub-boxes are required: <a href="../../php-reader/ISO/ISO14496_Box_STSD.html">Sample  Description</a>, <a href="../../php-reader/ISO/ISO14496_Box_STSZ.html">Sample Size</a>,  <a href="../../php-reader/ISO/ISO14496_Box_STSC.html">Sample To Chunk</a>, and <a href="../../php-reader/ISO/ISO14496_Box_STCO.html">Chunk  Offset</a>. Further, the <a href="../../php-reader/ISO/ISO14496_Box_STSD.html">Sample Description Box</a> shall  contain at least one entry. A Sample Description Box is required because it  contains the data reference index field which indicates which  <a href="../../php-reader/ISO/ISO14496_Box_DREF.html">Data Reference Box</a> to use to retrieve the media  samples. Without the Sample Description, it is not possible to determine  where the media samples are stored. The <a href="../../php-reader/ISO/ISO14496_Box_STSS.html">Sync Sample  Box</a> is optional. If the Sync Sample Box is not present, all samples are sync  samples.</p></p>
 	<ul class="tags">
 				<li><span class="field">author:</span> Sven Vollbehr &lt;<a href="mailto:svollbehr@gmail.com">svollbehr@gmail.com</a>&gt;</li>
-				<li><span class="field">version:</span> $Rev$</li>
+				<li><span class="field">version:</span> $Rev: 92 $</li>
 				<li><span class="field">copyright:</span> Copyright (c) 2008 The PHP Reader Project Workgroup</li>
 				<li><span class="field">license:</span> <a href="http://code.google.com/p/php-reader/wiki/License">New BSD License</a></li>
 			</ul>

@@ -31,7 +31,7 @@
  * @package   php-reader
  * @copyright Copyright (c) 2008 The PHP Reader Project Workgroup
  * @license   http://code.google.com/p/php-reader/wiki/License New BSD License
- * @version   $Id$
+ * @version   $Id: Exception.php 39 2008-03-26 17:27:22Z svollbehr $
  */
 
 /**
@@ -42,7 +42,7 @@
  * @author    Sven Vollbehr <svollbehr@gmail.com>
  * @copyright Copyright (c) 2008 The PHP Reader Project Workgroup
  * @license   http://code.google.com/p/php-reader/wiki/License New BSD License
- * @version   $Rev$
+ * @version   $Rev: 39 $
  */
 class Reader_Exception extends Exception
 {

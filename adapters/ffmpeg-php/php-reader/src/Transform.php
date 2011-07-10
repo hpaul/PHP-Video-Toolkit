@@ -32,7 +32,7 @@
  * @package   php-reader
  * @copyright Copyright (c) 2006-2008 The PHP Reader Project Workgroup
  * @license   http://code.google.com/p/php-reader/wiki/License New BSD License
- * @version   $Id$
+ * @version   $Id: Transform.php 105 2008-07-30 14:56:47Z svollbehr $
  */
 
 /**
@@ -43,7 +43,7 @@
  * @author    Ryan Butterfield <buttza@gmail.com>
  * @copyright Copyright (c) 2006-2008 The PHP Reader Project Workgroup
  * @license   http://code.google.com/p/php-reader/wiki/License New BSD License
- * @version   $Rev$
+ * @version   $Rev: 105 $
  * @static
  */
 final class Transform

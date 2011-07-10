@@ -36,6 +36,8 @@
 	
 //	input movie files
 	$files_to_process = array(
+		PHPVIDEOTOOLKIT_EXAMPLE_ABSOLUTE_PATH.'working'.DS.'to-be-processed'.DS.'red5RecordDemo_266.flv',
+		PHPVIDEOTOOLKIT_EXAMPLE_ABSOLUTE_PATH.'working'.DS.'to-be-processed'.DS.'on2_flash8_w_audio.flv',
 		PHPVIDEOTOOLKIT_EXAMPLE_ABSOLUTE_PATH.'working'.DS.'to-be-processed'.DS.'MOV00007.3gp',
 		PHPVIDEOTOOLKIT_EXAMPLE_ABSOLUTE_PATH.'working'.DS.'to-be-processed'.DS.'cat.mpeg'
 	);
@@ -98,9 +100,8 @@
 		$result = $toolkit->execute(false, true);
 		
 // 		get the last command given
-// 		$command = $toolkit->getLastCommand();
-// 		echo $command[0]."<br />\r\n";
-// 		echo $command[1]."<br />\r\n";
+		$command = $toolkit->getLastCommand();
+		echo $command."<br />\r\n";
 		
 // 		check the return value in-case of error
 		if($result !== PHPVideoToolkit::RESULT_OK)

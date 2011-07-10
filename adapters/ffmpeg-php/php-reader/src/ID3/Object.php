@@ -32,7 +32,7 @@
  * @subpackage ID3
  * @copyright  Copyright (c) 2008 The PHP Reader Project Workgroup
  * @license    http://code.google.com/p/php-reader/wiki/License New BSD License
- * @version    $Id$
+ * @version    $Id: Object.php 107 2008-08-03 19:09:16Z svollbehr $
  */
 
 /**
@@ -44,7 +44,7 @@
  * @author     Ryan Butterfield <buttza@gmail.com>
  * @copyright  Copyright (c) 2008 The PHP Reader Project Workgroup
  * @license    http://code.google.com/p/php-reader/wiki/License New BSD License
- * @version    $Rev$
+ * @version    $Rev: 107 $
  */
 abstract class ID3_Object
 {

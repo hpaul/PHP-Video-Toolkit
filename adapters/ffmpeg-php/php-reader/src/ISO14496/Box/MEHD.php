@@ -32,7 +32,7 @@
  * @subpackage ISO 14496
  * @copyright  Copyright (c) 2008 The PHP Reader Project Workgroup
  * @license    http://code.google.com/p/php-reader/wiki/License New BSD License
- * @version    $Id$
+ * @version    $Id: MEHD.php 92 2008-05-10 13:43:14Z svollbehr $
  */
 
 /**#@+ @ignore */
@@ -49,7 +49,7 @@ require_once("ISO14496/Box/Full.php");
  * @author     Sven Vollbehr <svollbehr@gmail.com>
  * @copyright  Copyright (c) 2008 The PHP Reader Project Workgroup
  * @license    http://code.google.com/p/php-reader/wiki/License New BSD License
- * @version    $Rev$
+ * @version    $Rev: 92 $
  */
 final class ISO14496_Box_MEHD extends ISO14496_Box_Full
 {

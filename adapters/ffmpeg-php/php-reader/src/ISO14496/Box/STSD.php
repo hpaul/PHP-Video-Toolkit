@@ -32,7 +32,7 @@
  * @subpackage ISO 14496
  * @copyright  Copyright (c) 2008 The PHP Reader Project Workgroup
  * @license    http://code.google.com/p/php-reader/wiki/License New BSD License
- * @version    $Id$
+ * @version    $Id: STSD.php 85 2008-04-23 20:21:36Z svollbehr $
  */
 
 /**#@+ @ignore */
@@ -49,7 +49,7 @@ require_once("ISO14496/Box/Full.php");
  * @author     Sven Vollbehr <svollbehr@gmail.com>
  * @copyright  Copyright (c) 2008 The PHP Reader Project Workgroup
  * @license    http://code.google.com/p/php-reader/wiki/License New BSD License
- * @version    $Rev$
+ * @version    $Rev: 85 $
  */
 final class ISO14496_Box_STSD extends ISO14496_Box_Full
 {

@@ -32,7 +32,7 @@
  * @subpackage Tests
  * @copyright  Copyright (c) 2008 The PHP Reader Project Workgroup
  * @license    http://code.google.com/p/php-reader/wiki/License New BSD License
- * @version    $Id$
+ * @version    $Id: TestID3v2.php 107 2008-08-03 19:09:16Z svollbehr $
  */
 
 /**#@+ @ignore */
@@ -48,7 +48,7 @@ require_once("ID3v2.php");
  * @author     Sven Vollbehr <svollbehr@gmail.com>
  * @copyright  Copyright (c) 2008 The PHP Reader Project Workgroup
  * @license    http://code.google.com/p/php-reader/wiki/License New BSD License
- * @version    $Rev$
+ * @version    $Rev: 107 $
  */
 final class TestID3v2 extends PHPUnit_Framework_TestCase
 {

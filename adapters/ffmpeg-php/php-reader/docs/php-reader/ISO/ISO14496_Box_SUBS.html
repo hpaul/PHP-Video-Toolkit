@@ -26,7 +26,7 @@
 <p class="description"><p>A sub-sample is a contiguous range of bytes of a sample. The specific  definition of a sub-sample shall be supplied for a given coding system (e.g.  for ISO/IEC 14496-10, Advanced Video Coding). In the absence of such a  specific definition, this box shall not be applied to samples using that  coding system.</p><p>If subsample_count is 0 for any entry, then those samples have no subsample  information and no array follows. The table is sparsely coded; the table  identifies which samples have sub-sample structure by recording the  difference in sample-number between each entry. The first entry in the table  records the sample number of the first sample having sub-sample information.</p><p>Note: It is possible to combine subsamplePriority and discardable such that  when subsamplePriority is smaller than a certain value, discardable is set to <ol><li>However, since different systems may use different scales of priority</li></ol> values, to separate them is safe to have a clean solution for discardable  sub-samples.</p></p>
 	<ul class="tags">
 				<li><span class="field">author:</span> Sven Vollbehr &lt;<a href="mailto:svollbehr@gmail.com">svollbehr@gmail.com</a>&gt;</li>
-				<li><span class="field">version:</span> $Rev$</li>
+				<li><span class="field">version:</span> $Rev: 92 $</li>
 				<li><span class="field">copyright:</span> Copyright (c) 2008 The PHP Reader Project Workgroup</li>
 				<li><span class="field">license:</span> <a href="http://code.google.com/p/php-reader/wiki/License">New BSD License</a></li>
 			</ul>

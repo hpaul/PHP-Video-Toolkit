@@ -21,7 +21,9 @@
 
 	echo '<html><head><link type="text/css" rel="stylesheet" href="../common/styles.css"><meta name="author" content="Oliver Lillie"></head><body>';
 	echo '<a class="backtoexamples" href="../index.php#examples">&larr; Back to examples list</a><br /><br />';
-	echo '<strong>This example shows you how to access the information about your ffmpeg installation.</strong><br /><br />';
+	echo '<strong>This example shows you how to access the information about your ffmpeg installation.</strong><br />';
+	echo '<span class="small">Note: This compiles the data gathered from your ffmpeg install into the specified temp directory so it does not need to be read and processed on each subsequent request.</span><br /><br />';
+
 	$ignore_demo_files = true;	
 	
 // 	load the examples configuration
@@ -36,11 +38,22 @@
 // 	start ffmpeg class
 	$toolkit = new PHPVideoToolkit($tmp_dir);
 	
-// 	get the ffmpeg info
-	$info = $toolkit->getFFmpegInfo();
+// 	get the ffmpeg info, whilst using the cache. Set true to false to disable the cache read.
+	$info = $toolkit->getFFmpegInfo(true);
 	
 // 	determine the type of support for ffmpeg-php
-	echo '<strong>FFmpeg-PHP Support</strong><br />';
+	echo '<strong>FFMpeg Info</strong><br />';
+	if($info['reading_from_cache'] === true)
+	{
+		echo 'This data is read from cache. It will expire on '.(date('d.m.Y H:i:s', $info['_cache_date']+2678400)).'.';
+	}
+	else
+	{
+		echo 'This data is uncached.';
+	}
+	
+// 	determine the type of support for ffmpeg-php
+	echo '<br /><br /><strong>FFmpeg-PHP Support</strong><br />';
 	
 // 	determine if ffmpeg-php is supported
 	$has_ffmpeg_php_support = $toolkit->hasFFmpegPHPSupport();
@@ -55,12 +68,12 @@
 			
 		case 'emulated' :
 			echo 'You haven\'t got the FFmpeg-PHP module installed, however you can use the PHPVideoToolkit\'s adapter\'s to emulate FFmpeg-PHP.<br />In order to make use of the FFmpeg-PHP adapter class all you need to do is add the following, replacing xxxx with the path to the files, then use FFmpeg-PHP as normal.
-<br /><pre>	if(!class_exists(\'ffmpeg_movie\')) 
-	{
-		require_once \'xxxx/adapters/ffmpeg-php/ffmpeg_movie.php\';
-		require_once \'xxxx/adapters/ffmpeg-php/ffmpeg_frame.php\';
-		require_once \'xxxx/adapters/ffmpeg-php/ffmpeg_animated_gif.php\';
-	}</pre><strong>Note:</strong> It is recommended that if you heavily use FFmpeg-PHP that you install the module. <br />
+<br /><pre>if(!class_exists(\'ffmpeg_movie\')) 
+{
+	require_once \'xxxx/adapters/ffmpeg-php/ffmpeg_movie.php\';
+	require_once \'xxxx/adapters/ffmpeg-php/ffmpeg_frame.php\';
+	require_once \'xxxx/adapters/ffmpeg-php/ffmpeg_animated_gif.php\';
+}</pre><strong>Note:</strong> It is recommended that if you heavily use FFmpeg-PHP that you install the module. 
 ';
 			break;
 		case false :
@@ -68,9 +81,11 @@
 			break;
 	}
 	
+// 	output data
 	echo '<br /><br /><strong>This is the information that is accessible about your install of FFmpeg.</strong><br />';
 	echo '<span class="small">You may also wish to see <a href="example14.php">example 14</a> which gives you an encode/decode lookup table.</span>';
 	echo '<pre>';
+	unset($info['raw']);
 	print_r($info);
 	echo '</pre>';
     echo '</body></html>';

@@ -5,7 +5,7 @@ The new home of ffmpeg is located at Sourceforge. Whilst I will make every effor
 the files at every location it is updated you should always check the Sourceforge repository
 for the latest version.
 
-http://sourceforge.net/projects/ffmpeg-phpclass/
+http://sourceforge.net/projects/phpvideotoolkit
 
 -----------
 INSTALL
@@ -27,8 +27,6 @@ LICENSE
 -----------
 The PHPVideoToolkit class, the VideoTo adapter class, the FFmpeg-PHP adapter classes and all 
 associated examples are subject to the a BSD license. See LICENSE for full information.
-
-
 
 
 Regards,

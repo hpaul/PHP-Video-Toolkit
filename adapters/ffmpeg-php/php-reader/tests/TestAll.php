@@ -32,7 +32,7 @@
  * @subpackage Tests
  * @copyright  Copyright (c) 2008 The PHP Reader Project Workgroup
  * @license    http://code.google.com/p/php-reader/wiki/License New BSD License
- * @version    $Id$
+ * @version    $Id: TestAll.php 107 2008-08-03 19:09:16Z svollbehr $
  */
 
 /**#@+ @ignore */

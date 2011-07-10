@@ -1,4 +1,9 @@
-[0.1.8] [24.09.2008] 
+[0.1.9] [06.11.2008] 
+	- ADDED a check in getFFmpegInfo to determine if ffmpeg is actually found/installed.
+	  The value is accessible through PHPVideoToolkit::$ffmpeg_found;
+	- ADDED example15.php that shows usage of PHPVideoToolkit::$ffmpeg_found
+
+[0.1.8] [06.10.2008] 
 	- FIXED php4 class parse errors and index examples.
 	- SEPARATED out php4 and php5 examples and rejigged the examples directory structure.
 	- ADDED DIRECTORY_SEPARATOR shortcut DS.
@@ -24,6 +29,25 @@
 	- FIXED use of static class detection in php5 class.
 	- UPDATED aspect ratio usage so if you use an aspect ratio the width and heights are set
 	  to what they should be using the aspect ratio.
+	- UPDATED addWatermark() to allow different watermark vhooks to be used, mainly 
+	  watermark.so and imlib2.so. http://ffmpeg.mplayerhq.hu/hooks.html#SEC4
+	  Thanks pwnedd.
+	- FIXED an error in getFileInfo() that threw a php notice and resulted in incorrect
+	  data when analyzing images.
+	- ADDED setAudioChannels(), PHPVideoToolkit::AUDIO_MONO and PHPVideoToolkit::AUDIO_STEREO
+	  to set the number of channels in the output media.
+	- ADDED fileHasVideo(), and fileHasAudio()
+	- ADDED frames to audio info, (this assumes ffmpeg uses 1 millisec = 1 audio frame, if not
+	  let me know)
+	- ADDED extractSegment() to extract portions of video and audio.
+	- FIXED durations.seconds info that incorrectly rounded the number of seconds the media
+	  is instead of accurate reporting.
+	- ADDED example15.php to show you how to extra a portion of media and then optionally
+	  speed it up or slow it down.
+	- ADDED new INSTALL directions pointing to ffmpeginstall the automatic command line
+	  ffmpeg et-all installer.
+	- CHANGED private vars and functions to protected for feature request of beiercai.
+	- ADDED disableVideo()
 
 [0.1.7] [19.06.2008] 
 	- FIXED error where an empty arguments param will get escaped and lead to an error

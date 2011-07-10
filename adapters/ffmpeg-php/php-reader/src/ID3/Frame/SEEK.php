@@ -32,7 +32,7 @@
  * @subpackage ID3
  * @copyright  Copyright (c) 2008 The PHP Reader Project Workgroup
  * @license    http://code.google.com/p/php-reader/wiki/License New BSD License
- * @version    $Id$
+ * @version    $Id: SEEK.php 75 2008-04-14 23:57:21Z svollbehr $
  * @since      ID3v2.4.0
  */
 
@@ -50,7 +50,7 @@ require_once("ID3/Frame.php");
  * @author     Sven Vollbehr <svollbehr@gmail.com>
  * @copyright  Copyright (c) 2008 The PHP Reader Project Workgroup
  * @license    http://code.google.com/p/php-reader/wiki/License New BSD License
- * @version    $Rev$
+ * @version    $Rev: 75 $
  * @since      ID3v2.4.0
  */
 final class ID3_Frame_SEEK extends ID3_Frame

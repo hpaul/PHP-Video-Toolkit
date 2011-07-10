@@ -33,7 +33,7 @@
  * @subpackage ASF
  * @copyright  Copyright (c) 2006-2008 The PHP Reader Project Workgroup
  * @license    http://code.google.com/p/php-reader/wiki/License New BSD License
- * @version    $Id$
+ * @version    $Id: ExtendedContentDescription.php 108 2008-09-05 17:00:05Z svollbehr $
  */
 
 /**#@+ @ignore */
@@ -50,7 +50,7 @@ require_once("ASF/Object.php");
  * @author     Sven Vollbehr <svollbehr@gmail.com>
  * @copyright  Copyright (c) 2006-2008 The PHP Reader Project Workgroup
  * @license    http://code.google.com/p/php-reader/wiki/License New BSD License
- * @version    $Rev$
+ * @version    $Rev: 108 $
  */
 final class ASF_Object_ExtendedContentDescription extends ASF_Object
 {

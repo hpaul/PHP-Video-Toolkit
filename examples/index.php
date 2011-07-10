@@ -80,14 +80,6 @@
 	$changelog = file_get_contents('../CHANGELOG');
 	$most_recent_changes = trim(substr($changelog, 0, strpos($changelog, "[", 15)));
 	
-// 	$ignore_version_warning = true;
-	$ignore_demo_files = true;
-	require_once 'example-config.php';
-	require_once '../phpvideotoolkit.'.$use_version.'.php';
-	$toolkit = new PHPVideotoolkit(PHPVIDEOTOOLKIT_EXAMPLE_ABSOLUTE_PATH.'working'.DS.'tmp'.DS);
-	$current_version = $toolkit->version;
-	$current_is_old = $release_date == 'unknown' ? -1 : version_compare($current_version, $release_version) === -1;
-	
 ?><html lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -98,13 +90,25 @@
 <body id="top">
 	<strong>PHPVideoToolkit &copy; Oliver Lillie, 2008</strong><br />
 	<br />
+<?php
+
+// 	$ignore_version_warning = true;
+	$ignore_demo_files = true;
+	require_once 'example-config.php';
+	require_once '../phpvideotoolkit.'.$use_version.'.php';
+	$toolkit = new PHPVideotoolkit(PHPVIDEOTOOLKIT_EXAMPLE_ABSOLUTE_PATH.'working'.DS.'tmp'.DS);
+	$current_version = $toolkit->version;
+	$current_is_old = $release_date == 'unknown' ? -1 : version_compare($current_version, $release_version) === -1;
+
+?>	
 	1. <a href="#about">About &amp; Current Version</a><br />      
 	2. <a href="#recentchanges">Most Recent Changes</a><br />
 	3. <a href="#installation">Installation</a><br />
 	4. <a href="#support">Support &amp; Feedback</a><br />
 	5. <a href="#examples">Examples</a><br />
-	6. <a href="#license">License</a><br />
-	7. <a href="#changelog">Changes</a><br />
+	6. <a href="../documentation/index.php">Documentation</a><br />
+	7. <a href="#license">License</a><br />
+	8. <a href="#changelog">Changes</a><br />
 	<br />
 	<hr />
 	<a id="about"></a><strong>About &amp; Current Version</strong><br />
@@ -194,6 +198,7 @@ Please check you are using the latest version by visiting the <a href="<?php ech
 		<li><a href="<?php echo $use_version; ?>/example12.php"><strong>Example 12</strong></a>, Shows you how you can simply and easily manipulate timecode strings to get them into whatever format you desire.<br /></li>
 		<li><a href="<?php echo $use_version; ?>/example13.php"><strong>Example 13</strong></a>, This demonstrates how to simply create a FLV stream script.<br /></li>
 		<li><a href="<?php echo $use_version; ?>/example14.php"><strong>Example 14</strong></a>, This gives you an encode/decode lookup table so you can see which formats can be encoded and/or decoded with your version of FFmpeg, whilst showing you how to easily check for different codecs.<br /></li>
+		<li><a href="<?php echo $use_version; ?>/example15.php"><strong>Example 15</strong></a>, Determines if FFmpeg is available or not.<br /></li>
 	</ul>
 	<br />
 	<a class="backtotop" href="#top">&uarr; Back to top</a><br />

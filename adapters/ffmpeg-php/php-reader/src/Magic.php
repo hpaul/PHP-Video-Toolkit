@@ -32,7 +32,7 @@
  * @package   php-reader
  * @copyright Copyright (c) 2006-2008 PHP Reader Project Workgroup
  * @license   http://code.google.com/p/php-reader/wiki/License New BSD License
- * @version   $Id$
+ * @version   $Id: Magic.php 73 2008-04-12 19:07:31Z svollbehr $
  */
 
 /**#@+ @ignore */
@@ -74,7 +74,7 @@ require_once("Reader.php");
  * @author    Sven Vollbehr <svollbehr@gmail.com>
  * @copyright Copyright (c) 2006-2008 PHP Reader Project Workgroup
  * @license   http://code.google.com/p/php-reader/wiki/License New BSD License
- * @version   $Rev$
+ * @version   $Rev: 73 $
  */
 final class Magic
 {

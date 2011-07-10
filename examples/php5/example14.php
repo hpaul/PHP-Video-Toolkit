@@ -31,36 +31,151 @@
 	require_once '../../phpvideotoolkit.'.$use_version.'.php';
 	
 // 	get the ffmpeg info
-	$codecs = PHPVideoToolkit::getAvailableCodecs();
+	$formats = PHPVideoToolkit::getAvailableFormats();
+	$audio_codecs = PHPVideoToolkit::getAvailableCodecs('audio');
+	$video_codecs = PHPVideoToolkit::getAvailableCodecs('video');
+	$subtitle_codecs = PHPVideoToolkit::getAvailableCodecs('subtitle');
 	
 	echo '<table border="0" cellspacing="0" cellpadding="5">
 		<tr>
-			<td style="width:125px;">
-				Codec
+			<td>
+				Format Information
 			</td>
-			<td style="width:75px;">
-				Encode
+			<td>
+				Codec Information
 			</td>
-			<td style="width:75px;">
-				Decode
-			</td>
-		</tr>';
-// 	loop and check availability
-	foreach ($codecs as $codec)
+		</tr>
+		<tr>
+			<td style="padding-right:20px;" valign="top">
+				<table border="0" cellspacing="0" cellpadding="5">
+					<tr>
+						<td style="width:125px;">
+							Format
+						</td>
+						<td style="width:75px;">
+							Mux
+						</td>
+						<td style="width:75px;">
+							Demux
+						</td>
+					</tr>';
+		
+// 		loop and check availability
+	foreach ($formats as $format)
 	{
-		echo '<tr>
-			<td style="border-bottom:1px solid #ccc">
-				'.$codec.'
-			</td>
-			<td style="border-bottom:1px solid #ccc">
-				'.(PHPVideoToolkit::canCodecBeEncoded($codec) ? 'YES' : '&nbsp;').'
-			</td>
-			<td style="border-bottom:1px solid #ccc">
-				'.(PHPVideoToolkit::canCodecBeDecoded($codec) ? 'YES' : '&nbsp;').'
-			</td>
-		</tr>';
+		echo ' 		<tr>
+						<td style="border-bottom:1px solid #ccc">
+							'.$format.'
+						</td>
+						<td style="border-bottom:1px solid #ccc">
+							'.(PHPVideoToolkit::canFormatBeMuxed($format) ? 'YES' : '&nbsp;').'
+						</td>
+						<td style="border-bottom:1px solid #ccc">
+							'.(PHPVideoToolkit::canFormatBeDemuxed($format) ? 'YES' : '&nbsp;').'
+						</td>
+					</tr>';
 	}
-	echo '</table>';
+	echo '		</table>
+			</td>
+	   		<td valign="top">
+				<strong>Audio Codecs</strong>
+				<table border="0" cellspacing="0" cellpadding="5">
+					<tr>
+						<td style="width:125px;">
+							Format
+						</td>
+						<td style="width:75px;">
+							Encode
+						</td>
+						<td style="width:75px;">
+							Decode
+						</td>
+					</tr>';
+		
+// 		loop and check availability
+	foreach ($audio_codecs as $codec)
+	{
+		echo ' 		<tr>
+						<td style="border-bottom:1px solid #ccc">
+							'.$codec.'
+						</td>
+						<td style="border-bottom:1px solid #ccc">
+							'.(PHPVideoToolkit::canCodecBeEncoded('audio', $codec) ? 'YES' : '&nbsp;').'
+						</td>
+						<td style="border-bottom:1px solid #ccc">
+							'.(PHPVideoToolkit::canCodecBeDecoded('audio', $codec) ? 'YES' : '&nbsp;').'
+						</td>
+					</tr>';
+	}
+	echo '		</table>
+				<br />
+				<br />
+				<strong>Video Codecs</strong>
+				<table border="0" cellspacing="0" cellpadding="5">
+					<tr>
+						<td style="width:125px;">
+							Format
+						</td>
+						<td style="width:75px;">
+							Encode
+						</td>
+						<td style="width:75px;">
+							Decode
+						</td>
+					</tr>';
+		
+// 	loop and check availability
+	foreach ($video_codecs as $codec)
+	{
+		echo ' 		<tr>
+						<td style="border-bottom:1px solid #ccc">
+							'.$codec.'
+						</td>
+						<td style="border-bottom:1px solid #ccc">
+							'.(PHPVideoToolkit::canCodecBeEncoded('video', $codec) ? 'YES' : '&nbsp;').'
+						</td>
+						<td style="border-bottom:1px solid #ccc">
+							'.(PHPVideoToolkit::canCodecBeDecoded('video', $codec) ? 'YES' : '&nbsp;').'
+						</td>
+					</tr>';
+	}
+	echo '		</table>
+				<br />
+				<br />
+				<strong>Subtitle Codecs</strong>
+				<table border="0" cellspacing="0" cellpadding="5">
+					<tr>
+						<td style="width:125px;">
+							Codec
+						</td>
+						<td style="width:75px;">
+							Encode
+						</td>
+						<td style="width:75px;">
+							Decode
+						</td>
+					</tr>';
+		
+// 	loop and check availability
+	foreach ($subtitle_codecs as $codec)
+	{
+		echo ' 		<tr>
+						<td style="border-bottom:1px solid #ccc">
+							'.$codec.'
+						</td>
+						<td style="border-bottom:1px solid #ccc">
+							'.(PHPVideoToolkit::canCodecBeEncoded('subtitle', $codec) ? 'YES' : '&nbsp;').'
+						</td>
+						<td style="border-bottom:1px solid #ccc">
+							'.(PHPVideoToolkit::canCodecBeDecoded('subtitle', $codec) ? 'YES' : '&nbsp;').'
+						</td>
+					</tr>';
+	}
+	echo '		</table>
+  			</td>
+		</tr>
+	</table>';  
+
 	
 // 	loop the codecs
 	

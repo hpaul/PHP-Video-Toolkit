@@ -44,4 +44,10 @@ Shows you how to manipulate/format timecode strings.
 example13.php 
 This demonstrates how to simply create a FLV stream script.
 
+example14.php 
+An encode/decode lookup table.
+
+example15.php 
+Determine if ffmpeg is installed.
+
 /* SVN FILE: $Id$ */

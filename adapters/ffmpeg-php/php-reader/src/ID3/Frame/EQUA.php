@@ -32,7 +32,7 @@
  * @subpackage ID3
  * @copyright  Copyright (c) 2008 The PHP Reader Project Workgroup
  * @license    http://code.google.com/p/php-reader/wiki/License New BSD License
- * @version    $Id$
+ * @version    $Id: EQUA.php 105 2008-07-30 14:56:47Z svollbehr $
  * @deprecated ID3v2.3.0
  */
 
@@ -51,7 +51,7 @@ require_once("ID3/Frame.php");
  * @author     Ryan Butterfield <buttza@gmail.com>
  * @copyright  Copyright (c) 2008 The PHP Reader Project Workgroup
  * @license    http://code.google.com/p/php-reader/wiki/License New BSD License
- * @version    $Rev$
+ * @version    $Rev: 105 $
  * @deprecated ID3v2.3.0
  */
 final class ID3_Frame_EQUA extends ID3_Frame

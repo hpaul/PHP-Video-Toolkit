@@ -27,7 +27,7 @@
      the beginning of the file (offset 0) is implied.</li></ul>     or items divided into more than one extent, should have an explicit      offset and length, or use a MIME type requiring a different      interpretation of the file, to avoid infinite recursion.</p><p>The size of the item is the sum of the extentLengths. Note: extents may be  interleaved with the chunks defined by the sample tables of tracks.</p><p>The dataReferenceIndex may take the value 0, indicating a reference into the  same file as this metadata, or an index into the dataReference table.</p><p>Some referenced data may itself use offset/length techniques to address  resources within it (e.g. an MP4 file might be included in this way).  Normally such offsets are relative to the beginning of the containing file.  The field base offset provides an additional offset for offset calculations  within that contained data. For example, if an MP4 file is included within a  file formatted to this specification, then normally data-offsets within that  MP4 section are relative to the beginning of file; baseOffset adds to those  offsets.</p></p>
 	<ul class="tags">
 				<li><span class="field">author:</span> Sven Vollbehr &lt;<a href="mailto:svollbehr@gmail.com">svollbehr@gmail.com</a>&gt;</li>
-				<li><span class="field">version:</span> $Rev$</li>
+				<li><span class="field">version:</span> $Rev: 92 $</li>
 				<li><span class="field">copyright:</span> Copyright (c) 2008 The PHP Reader Project Workgroup</li>
 				<li><span class="field">license:</span> <a href="http://code.google.com/p/php-reader/wiki/License">New BSD License</a></li>
 			</ul>

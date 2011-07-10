@@ -26,7 +26,7 @@
 <p class="description"><p>readers in finding random access points in a file using movie fragments. It  contains a track fragment random access box for each track for which  information is provided (which may not be all tracks). It is usually placed  at or near the end of the file; the last box within the Movie Fragment Random  Access Box provides a copy of the length field from the Movie Fragment Random  Access Box. Readers may attempt to find this box by examining the last 32  bits of the file, or scanning backwards from the end of the file for a Movie  Fragment Random Access Offset Box and using the size information in it, to  see if that locates the beginning of a Movie Fragment Random Access Box.</p><p>This box provides only a hint as to where random access points are; the movie  fragments themselves are definitive. It is recommended that readers take care  in both locating and using this box as modifications to the file after it was  created may render either the pointers, or the declaration of random access  points, incorrect.</p></p>
 	<ul class="tags">
 				<li><span class="field">author:</span> Sven Vollbehr &lt;<a href="mailto:svollbehr@gmail.com">svollbehr@gmail.com</a>&gt;</li>
-				<li><span class="field">version:</span> $Rev$</li>
+				<li><span class="field">version:</span> $Rev: 92 $</li>
 				<li><span class="field">copyright:</span> Copyright (c) 2008 The PHP Reader Project Workgroup</li>
 				<li><span class="field">license:</span> <a href="http://code.google.com/p/php-reader/wiki/License">New BSD License</a></li>
 			</ul>

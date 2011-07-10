@@ -14,11 +14,13 @@
 	}
 
 // 	define the paths to the required binaries
-	define('PHPVIDEOTOOLKIT_FFMPEG_BINARY', '/usr/local/bin/ffmpeg');
+// 	define('PHPVIDEOTOOLKIT_FFMPEG_BINARY', 'ffmpeg');
+	define('PHPVIDEOTOOLKIT_FFMPEG_BINARY', '/opt/local/bin/ffmpeg');
+// 	define('PHPVIDEOTOOLKIT_FFMPEG_BINARY', '/usr/local/bin/ffmpeg');
 	define('PHPVIDEOTOOLKIT_FLVTOOLS_BINARY', '/usr/bin/flvtool2');
 	define('PHPVIDEOTOOLKIT_MENCODER_BINARY', '/usr/local/bin/mencoder'); // only required for video joining
 	define('PHPVIDEOTOOLKIT_FFMPEG_WATERMARK_VHOOK', '/usr/local/lib/vhook/watermark.dylib'); // only required for video wartermarking
-// 	define('PHPVIDEOTOOLKIT_FFMPEG_BINARY', 'xxxx');
+	// 	define('PHPVIDEOTOOLKIT_FFMPEG_BINARY', 'xxxx');
 // 	define('PHPVIDEOTOOLKIT_FLVTOOLS_BINARY', 'xxxx');
 // 	define('PHPVIDEOTOOLKIT_MENCODER_BINARY', 'xxxx'); // only required for video joining
 // 	define('PHPVIDEOTOOLKIT_FFMPEG_WATERMARK_VHOOK', 'xxxx'); // only required for video wartermarking
@@ -29,7 +31,7 @@
 
 	if(PHPVIDEOTOOLKIT_FFMPEG_BINARY == 'xxxx' || PHPVIDEOTOOLKIT_FLVTOOLS_BINARY == 'xxxx' || PHPVIDEOTOOLKIT_MENCODER_BINARY == 'xxxx' || PHPVIDEOTOOLKIT_FFMPEG_WATERMARK_VHOOK == 'xxxx' || PHPVIDEOTOOLKIT_EXAMPLE_ABSOLUTE_PATH == 'xxxx')
 	{
-		die('Please open examples/example-config.php to set your servers values.');
+		die('<strong class="alert">Please open examples/example-config.php to set your servers values. Then <a href="?'.time().'">click here</a> to continue.</strong>');
 //<-		exits 		
 	}
 	

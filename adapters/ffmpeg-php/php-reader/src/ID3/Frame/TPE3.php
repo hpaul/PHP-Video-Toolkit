@@ -32,7 +32,7 @@
  * @subpackage ID3
  * @copyright  Copyright (c) 2008 The PHP Reader Project Workgroup
  * @license    http://code.google.com/p/php-reader/wiki/License New BSD License
- * @version    $Id$
+ * @version    $Id: TPE3.php 65 2008-04-02 15:22:46Z svollbehr $
  */
 
 /**#@+ @ignore */
@@ -47,6 +47,6 @@ require_once("ID3/Frame/AbstractText.php");
  * @author     Sven Vollbehr <svollbehr@gmail.com>
  * @copyright  Copyright (c) 2008 The PHP Reader Project Workgroup
  * @license    http://code.google.com/p/php-reader/wiki/License New BSD License
- * @version    $Rev$
+ * @version    $Rev: 65 $
  */
 final class ID3_Frame_TPE3 extends ID3_Frame_AbstractText {}

@@ -48,7 +48,7 @@
 		
 		/**
 		 * Class Constructor
-		 * Create a new PHPVideoToolkit_animated_gif object.
+		 * Create a new ffmpeg_animated_gif object.
 		 * @param resource $output_file_path Location in the filesystem where the animated gif will be written.
 		 * @param resource $width Width of the animated gif.
 		 * @param resource $height Height of the animated gif.

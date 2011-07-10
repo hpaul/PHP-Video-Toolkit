@@ -32,7 +32,7 @@
  * @subpackage ISO 14496
  * @copyright  Copyright (c) 2008 The PHP Reader Project Workgroup
  * @license    http://code.google.com/p/php-reader/wiki/License New BSD License
- * @version    $Id$
+ * @version    $Id: Exception.php 102 2008-06-23 20:41:20Z svollbehr $
  */
 
 /**
@@ -44,7 +44,7 @@
  * @author     Sven Vollbehr <svollbehr@gmail.com>
  * @copyright  Copyright (c) 2008 The PHP Reader Project Workgroup
  * @license    http://code.google.com/p/php-reader/wiki/License New BSD License
- * @version    $Rev$
+ * @version    $Rev: 102 $
  */
 class ASF_Exception extends Exception
 {

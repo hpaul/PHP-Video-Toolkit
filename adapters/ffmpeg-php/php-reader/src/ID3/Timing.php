@@ -32,7 +32,7 @@
  * @subpackage ID3
  * @copyright  Copyright (c) 2008 The PHP Reader Project Workgroup
  * @license    http://code.google.com/p/php-reader/wiki/License New BSD License
- * @version    $Id$
+ * @version    $Id: Timing.php 64 2008-04-01 10:38:12Z svollbehr $
  */
 
 /**
@@ -47,7 +47,7 @@
  * @author     Sven Vollbehr <svollbehr@gmail.com>
  * @copyright  Copyright (c) 2008 The PHP Reader Project Workgroup
  * @license    http://code.google.com/p/php-reader/wiki/License New BSD License
- * @version    $Rev$
+ * @version    $Rev: 64 $
  */
 interface ID3_Timing
 {

@@ -73,15 +73,21 @@
 		{
 			if($this->_php_reader === null)
 			{
+				$this->_php_reader = -1;
 				$php_reader = dirname(__FILE__).DS.'php-reader'.DS.'src'.DS.'ID3v1.php';
 				if(is_file($php_reader))
 				{
 					require_once $php_reader;
-					$this->_php_reader = new ID3v1($this->_path_to_media);
-// 					print_r($this->_getid3_data);
+					try 
+					{
+						$this->_php_reader = new ID3v1($this->_path_to_media);
+					} 
+					catch (Exception $e) 
+					{
+						return false;
+					}
 					return true;
 				}
-				$this->_php_reader = -1;
 			}
 			return $this->_php_reader !== -1;
 		}
